@@ -1,4 +1,4 @@
-declare module 'solid-auth-client' {
+declare module 'solid-auth-client-adapted' {
     function fetch(input: RequestInfo, options?: RequestInit): Promise<Response>;
     function login(idp: string, options: loginOptions): Promise<Session | null>;
     function popupLogin(options: loginOptions): Promise<Session | null>;

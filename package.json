@@ -43,8 +43,9 @@
     "react-redux": "^6.0.1",
     "react-scripts": "^2.1.8",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "~2.3.0",
-    "solid-auth-client": "^2.4.1",
+    "solid-auth-client-adapted": "^2.6.0",
     "solid-file-client": "^1.0.2",
     "typeface-roboto": "0.0.54",
     "typescript": "^3.7.5"
