@@ -6,6 +6,7 @@ import { AppState } from '../Reducers/reducer';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { guessContentType } from '../Api/contentTypes';
 import { version } from '../../package.json';
+import { getLocationObjectFromUrl } from '../Components/HistoryHandler/HistoryHandler';
 
 
 export type MyThunk = ThunkAction<void, AppState, null, Action<any>>;
@@ -39,6 +40,14 @@ export const updateLoginStatus = (session?: Session|null): MyThunk => async (dis
         debugger
         dispatch(setWebId(session.webId));
         dispatch(setLoggedIn());
+        dispatch(closeDialog(DIALOGS.CHOOSE_LOCATION));
+        let user = session.webId.replace("https://","").replace("."+session.idp.replace("https://","") + "/profile/card#me","")
+        let gateway = "https://" + user + "." + session.gateway.replace("https://","")
+        const { host, path } = getLocationObjectFromUrl(gateway);
+        dispatch(setHost(host));
+        dispatch(clearCache());
+            dispatch(enterFolder(path));
+
     }
 }
 

@@ -20,6 +20,7 @@ type loginOptions = {
 
 type webIdOidcSession = {
     idp: string,
+    gateway: string,
     webId: string,
     accessToken: string,
     idToken: string,
