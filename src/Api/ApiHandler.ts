@@ -2,7 +2,7 @@ import JSZip from 'jszip';
 import { FileItem, FolderItem, Item } from './Item';
 import ApiCache from './ApiCache';
 import config from './../config';
-import * as solidAuth from 'solid-auth-client';
+import * as solidAuth from 'solid-auth-client-adapted';
 import SolidFileClient from 'solid-file-client';
 import { guessContentType } from './contentTypes';
 

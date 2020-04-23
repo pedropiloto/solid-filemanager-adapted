@@ -1,5 +1,5 @@
 import * as APIHandler from '../Api/ApiHandler';
-import * as solidAuth from 'solid-auth-client';
+import * as solidAuth from 'solid-auth-client-adapted';
 import { Item, FileItem, FolderItem } from '../Api/Item';
 import { Action, SET_LOGGED_IN, SET_LOGGED_OUT, SET_HOST, SET_ITEMS, SET_WEB_ID, SELECT_ITEMS, TOGGLE_SELECTED_ITEM, DESELECT_ITEM, FILTER_ITEMS, RESET_FILTER, DISPLAY_LOADING, STOP_LOADING, DIALOGS, OPEN_DIALOG, CLOSE_DIALOG, SET_LOADED_BLOB, SET_UPLOAD_FILE_LIST, SET_UPLOAD_FILE_PROGRESS, SET_PATH, MOVE_FOLDER_UPWARDS, RESET_LOADED_BLOB, RESET_HOST, RESET_WEB_ID, SET_ERROR_MESSAGE, OPEN_CONTEXT_MENU, CLOSE_CONTEXT_MENU } from './actionTypes';
 import { AppState } from '../Reducers/reducer';
@@ -22,7 +22,9 @@ export const solidLogin = (): MyThunk => (dispatch, getState) => {
     dispatch(displayLoading());
 
     solidPopupLogin()
-        .then(session => dispatch(updateLoginStatus(session)))
+        .then(session => {
+            debugger
+            return dispatch(updateLoginStatus(session))})
         .catch(r => dispatch(setErrorMessage(String(r))))
         .finally(() => dispatch(stopLoading()));
 };
@@ -34,13 +36,14 @@ export const updateLoginStatus = (session?: Session|null): MyThunk => async (dis
         dispatch(resetWebId());
     }
     else {
+        debugger
         dispatch(setWebId(session.webId));
         dispatch(setLoggedIn());
     }
 }
 
 async function solidPopupLogin() {
-    return solidAuth.popupLogin({ popupUri: './vendor/solid-auth-client/popup.html' });
+    return solidAuth.popupLogin({ popupUri: "./vendor/solid-auth-client-adapted/popup.html" });
 }
 
 
