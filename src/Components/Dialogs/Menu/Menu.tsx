@@ -46,10 +46,6 @@ class FormDialog extends Component<ChooseLocationProps> {
         console.log("Couldn't find location input");
     }
 
-    handleSubmit(event: DialogButtonClickEvent) {
-        this.props.handleSubmit(event, { location: this.state.location });
-    }
-
     render() {
         let { location } = this.state;
         location = location ? location : '';
@@ -70,23 +66,10 @@ class FormDialog extends Component<ChooseLocationProps> {
                             <Button variant="outlined" color="primary" onClick={handleLogin}>Login</Button>
                             : <Button variant="outlined" onClick={handleLogout}>Logout</Button>
                         }
-
-                        <Typography variant="body1">
-                            Please enter the directory you want to open below.
-                    </Typography>
-                        <TextField autoFocus fullWidth
-                            margin="normal"
-                            label="Storage Location"
-                            variant="outlined"
-                            onChange={this.handleChange.bind(this)}
-                            value={location} />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} color="primary" type="button">
                             Cancel
-                    </Button>
-                        <Button color="primary" type="submit" onClick={this.handleSubmit.bind(this)}>
-                            Open directory
                     </Button>
                     </DialogActions>
                 </form>
@@ -102,7 +85,6 @@ interface StateProps extends DialogStateProps {
 interface DispatchProps extends DialogDispatchProps {
     handleLogin(event: DialogButtonClickEvent): void;
     handleLogout(event: DialogButtonClickEvent): void;
-    handleSubmit(event: DialogButtonClickEvent, { location }: { location: string }): void;
 }
 interface ChooseLocationProps extends StateProps, DispatchProps { }
 
@@ -127,17 +109,6 @@ const mapDispatchToProps = (dispatch: MyDispatch): DispatchProps => {
         handleLogout: event => {
             event.preventDefault();
             dispatch(solidLogout());
-        },
-        handleSubmit: (event, { location }) => {
-            event.preventDefault();
-            if (!location)
-                return dispatch(setErrorMessage("Please enter the folder which should be opened"));
-
-            const { host, path } = getLocationObjectFromUrl(location);
-            dispatch(closeDialog(DIALOGS.CHOOSE_LOCATION));
-            dispatch(setHost(host));
-            dispatch(clearCache());
-            dispatch(enterFolder(path));
         }
     };
 };
